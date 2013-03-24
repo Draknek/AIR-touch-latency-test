@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    <application xmlns="http://ns.adobe.com/air/application/2.6">
+
+    <id>org.draknek.touchtest</id>
+    <filename>touchtest</filename>
+    <name>Touch Test</name>
+    <versionNumber>1.0</versionNumber>
+    <copyright>Alan Hazelden</copyright>
+    
+    <initialWindow>
+        <title></title>
+        <content>touch-test.swf</content>
+        <systemChrome>standard</systemChrome>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <minimizable>true</minimizable>
+        <autoOrients>true</autoOrients>
+        <resizable>false</resizable>
+        <renderMode>cpu</renderMode>
+        <fullScreen>true</fullScreen>
+    </initialWindow>
+
+    <supportedProfiles>mobileDevice desktop</supportedProfiles>
+    
+    <android>
+    <manifestAdditions>
+    <![CDATA[
+    <manifest android:installLocation="auto">
+    <supports-screens android:smallScreens="true"/>
+    <supports-screens android:normalScreens="true"/>
+    <supports-screens android:largeScreens="true"/>
+    <supports-screens android:xlargeScreens="true"/>
+    <application android:enabled="true">
+    <activity android:excludeFromRecents="false">
+    <intent-filter>
+    <action android:name="android.intent.action.MAIN"/>
+    <category android:name="android.intent.category.LAUNCHER"/>
+    </intent-filter>
+    </activity>
+    </application>
+    </manifest>
+    ]]>
+    </manifestAdditions>
+    </android>
+    
+</application>
