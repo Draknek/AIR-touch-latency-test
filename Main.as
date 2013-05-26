@@ -6,10 +6,13 @@ package
 	import flash.text.*;
 	import flash.utils.*;
 	
+	import nl.funkymonkey.android.deviceinfo.*;
+	
 	public class Main extends Sprite
 	{
 		public var fpsText:TextField;
 		public var mouseDown:Boolean = false;
+		public var extraInfo:String;
 		
 		public function Main ()
 		{
@@ -25,6 +28,7 @@ package
 			fpsText.textColor = 0xFFFFFF;
 			fpsText.x = 10;
 			fpsText.y = 10;
+			fpsText.autoSize = "left";
 			
 			addChild(fpsText);
 			
@@ -34,12 +38,41 @@ package
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			
-			fixAndroidLag();
+			//fixAndroidLag();
+			
+			var NativeApplication:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
+			var airRuntimeVersion:String = NativeApplication["nativeApplication"]["runtimeVersion"];
+			
+			var xml:XML = NativeApplication["nativeApplication"]["applicationDescriptor"];
+			
+			var ns:Namespace = xml.namespace();
+			
+			var appName:String = xml.ns::name;
+			
+			var airCompileVersion:String = ns.uri.substring(ns.uri.lastIndexOf("/") + 1);
+			
+			NativeDeviceInfo.parse();
+			
+			extraInfo = appName;
+			
+			extraInfo += "\n\n";
+			
+			extraInfo += "AIR " + airCompileVersion + " (compiled)\n";
+			extraInfo += "AIR " + airRuntimeVersion + " (runtime)";
+			
+			extraInfo += "\n\n";
+			
+			extraInfo += "OS: " + NativeDeviceProperties.OS_NAME.value + " " + NativeDeviceProperties.OS_VERSION.value + "\n";
+			extraInfo += "Device: " + NativeDeviceProperties.PRODUCT_MODEL.value;
+			if (NativeDeviceProperties.PRODUCT_VERSION.value) {
+				extraInfo += " " + NativeDeviceProperties.PRODUCT_VERSION.value;
+			}
+			extraInfo += " (" + NativeDeviceProperties.PRODUCT_BRAND.value + ")";
 		}
 		
 		private function onEnterFrame(e:Event):void
 		{
-			fpsText.text = FPS.fps.toFixed(2) + "FPS";
+			fpsText.text = FPS.fps.toFixed(2) + "FPS\n\n" + extraInfo;
 			
 			graphics.clear();
 			graphics.beginFill(mouseDown ? 0x800000 : 0x000000);
