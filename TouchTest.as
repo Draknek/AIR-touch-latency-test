@@ -8,13 +8,13 @@ package
 	
 	import nl.funkymonkey.android.deviceinfo.*;
 	
-	public class Main extends Sprite
+	public class TouchTest extends Sprite
 	{
 		public var fpsText:TextField;
 		public var mouseDown:Boolean = false;
 		public var extraInfo:String;
 		
-		public function Main ()
+		public function TouchTest ()
 		{
 			stage.frameRate = 60;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
