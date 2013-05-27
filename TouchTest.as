@@ -16,6 +16,16 @@ package
 		
 		public function TouchTest ()
 		{
+			if (stage) {
+				init();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, init);
+				alpha = 0.8;
+			}
+		}
+		
+		public function init (e:* = null):void
+		{
 			stage.frameRate = 60;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
